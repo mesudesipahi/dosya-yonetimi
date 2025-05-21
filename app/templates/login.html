@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Giriş Yap</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.username.label }} {{ form.username() }} <br>
+    {{ form.password.label }} {{ form.password() }} <br>
+    {{ form.submit() }}
+</form>
+<p>Hesabınız yok mu? <a href="{{ url_for('main.register') }}">Kayıt ol</a></p>
+{% endblock %}
