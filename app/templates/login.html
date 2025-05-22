@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
+
+{% block title %}Giriş Yap{% endblock %}
+
 {% block content %}
-<h2>Giriş Yap</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    {{ form.username.label }} {{ form.username() }} <br>
-    {{ form.password.label }} {{ form.password() }} <br>
-    {{ form.submit() }}
-</form>
-<p>Hesabınız yok mu? <a href="{{ url_for('main.register') }}">Kayıt ol</a></p>
+    <h2>Kullanıcı Girişi</h2>
+
+    <form action="/login" method="post">
+        <div>
+            <label for="username">Kullanıcı Adı:</label><br>
+            <input type="text" id="username" name="username" required>
+        </div><br>
+
+        <div>
+            <label for="password">Şifre:</label><br>
+            <input type="password" id="password" name="password" required>
+        </div><br>
+
+        <button type="submit">Giriş Yap</button>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li style="color:red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <p>Henüz hesabınız yok mu? <a href="{{ url_for('main.register') }}">Kayıt olun</a>.</p>
 {% endblock %}
