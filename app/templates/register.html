@@ -1,12 +1,43 @@
 {% extends 'base.html' %}
+
+{% block title %}Kayıt Ol{% endblock %}
+
 {% block content %}
-<h2>Kayıt Ol</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    {{ form.username.label }} {{ form.username() }} <br>
-    {{ form.password.label }} {{ form.password() }} <br>
-    {{ form.confirm_password.label }} {{ form.confirm_password() }} <br>
-    {{ form.submit() }}
-</form>
-<p>Zaten hesabınız var mı? <a href="{{ url_for('main.login') }}">Giriş yap</a></p>
+    <h2>Kayıt Ol</h2>
+
+    <form action="{{ url_for('main.register') }}" method="post">
+        <div>
+            <label for="username">Kullanıcı Adı:</label><br>
+            <input type="text" id="username" name="username" required>
+        </div><br>
+
+        <div>
+            <label for="email">E-posta:</label><br>
+            <input type="email" id="email" name="email" required>
+        </div><br>
+
+        <div>
+            <label for="password">Şifre:</label><br>
+            <input type="password" id="password" name="password" required>
+        </div><br>
+
+        <div>
+            <label for="confirm_password">Şifre Tekrar:</label><br>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+        </div><br>
+
+        <button type="submit">Kayıt Ol</button>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li style="color:red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <p>Zaten hesabınız varsa <a href="{{ url_for('main.login') }}">giriş yapın</a>.</p>
 {% endblock %}
