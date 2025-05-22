@@ -1,1 +1,33 @@
+{% extends 'base.html' %}
 
+{% block title %}Ana Sayfa{% endblock %}
+
+{% block content %}
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Yükle</button>
+    </form>
+
+    <h2>Yüklenen Dosyalar</h2>
+    <ul>
+        {% for file in files %}
+            <li>
+                {{ file }}
+                <a href="{{ url_for('static', filename='uploads/' + file) }}" target="_blank">Görüntüle</a>
+                <a href="{{ url_for('main.delete', filename=file) }}">Sil</a>
+            </li>
+        {% else %}
+            <li>Henüz dosya yok.</li>
+        {% endfor %}
+    </ul>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+{% endblock %}
