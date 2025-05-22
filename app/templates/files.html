@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
+
+{% block title %}Yüklenen Dosyalar{% endblock %}
+
 {% block content %}
-<h2>Yüklenen Dosyalar</h2>
-
-<ul>
-    {% for file in files %}
-    <li>
-        {{ file }}
-        - <a href="{{ url_for('static', filename='uploads/' + file) }}" target="_blank">Görüntüle</a>
-        <form action="{{ url_for('main.delete_file', filename=file) }}" method="POST" style="display:inline;">
-            <button type="submit">Sil</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
-
-<a href="{{ url_for('main.upload') }}">Dosya Yükle</a> |
-<a href="{{ url_for('main.logout') }}">Çıkış Yap</a>
+    <h2>Yüklenen Dosyalar</h2>
+    <ul>
+        {% for file in files %}
+            <li>
+                {{ file }}
+                <a href="{{ url_for('static', filename='uploads/' + file) }}" target="_blank">Görüntüle</a>
+                <a href="{{ url_for('main.delete', filename=file) }}">Sil</a>
+            </li>
+        {% else %}
+            <li>Henüz dosya yok.</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('main.index') }}">Geri dön</a>
 {% endblock %}
