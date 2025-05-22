@@ -1,22 +1,31 @@
 from flask_login import UserMixin
 
-# Basit bir kullanıcı modeli (şimdilik sadece username ve password saklayacağız)
+# Basit kullanıcı modeli
 class User(UserMixin):
-    def __init__(self, id, username, password):
+    def __init__(self, id, username, email, password):
         self.id = id
         self.username = username
+        self.email = email
         self.password = password
 
-# Basit veritabanı (örnek için dictionary)
+# Basit kullanıcı veritabanı (örnek için dictionary)
 users = {}
 
-# Kullanıcıyı ID'ye göre getirme
+# Kullanıcıyı ID'ye göre getir
 def get_user_by_id(user_id):
     return users.get(user_id)
 
-# Kullanıcıyı kullanıcı adına göre getirme
+# Kullanıcıyı kullanıcı adına göre getir
 def get_user_by_username(username):
-    for user in users.values():
-        if user.username == username:
-            return user
-    return None
+    return next((user for user in users.values() if user.username == username), None)
+
+# Kullanıcıyı e-postaya göre getir (isteğe bağlı)
+def get_user_by_email(email):
+    return next((user for user in users.values() if user.email == email), None)
+
+# Yeni kullanıcı ekle
+def add_user(username, email, password):
+    user_id = str(len(users) + 1)
+    new_user = User(user_id, username, email, password)
+    users[user_id] = new_user
+    return new_user
